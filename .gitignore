@@ -1,2 +1,3 @@
-# Xcode
-*.xcworkspace/xcuserdata/
+# Xcode user files
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/

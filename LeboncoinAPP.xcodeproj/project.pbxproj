@@ -24,9 +24,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D181D132DB3AC41001A393A /* LeboncoinAPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = LeboncoinAPP.xcodeproj; sourceTree = "<group>"; };
 		1D1F45AA2DB38DFE006B7C74 /* LeboncoinAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeboncoinAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1F45B82DB38DFE006B7C74 /* LeboncoinAPPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeboncoinAPPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1F45C22DB38DFE006B7C74 /* LeboncoinAPPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeboncoinAPPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D1F45E82DB393AC006B7C74 /* LeboncoinAPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = LeboncoinAPP.xcodeproj; sourceTree = "<group>"; };
+		1D1F47D02DB3A60D006B7C74 /* LeboncoinAPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = LeboncoinAPP.xcodeproj; sourceTree = "<group>"; };
+		1D2472AE2DB3B24700F0E3D8 /* LeboncoinAPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = LeboncoinAPP.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -72,6 +76,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D181D152DB3AC41001A393A /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1D1F45A12DB38DFD006B7C74 = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +98,21 @@
 				1D1F45B82DB38DFE006B7C74 /* LeboncoinAPPTests.xctest */,
 				1D1F45C22DB38DFE006B7C74 /* LeboncoinAPPUITests.xctest */,
 			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D1F45EA2DB393AC006B7C74 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D1F47D22DB3A60D006B7C74 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D2472B02DB3B24700F0E3D8 /* Products */ = {
+			isa = PBXGroup;
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -198,6 +222,24 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1D1F45AB2DB38DFE006B7C74 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1D1F47D22DB3A60D006B7C74 /* Products */;
+					ProjectRef = 1D1F47D02DB3A60D006B7C74 /* LeboncoinAPP.xcodeproj */;
+				},
+				{
+					ProductGroup = 1D1F45EA2DB393AC006B7C74 /* Products */;
+					ProjectRef = 1D1F45E82DB393AC006B7C74 /* LeboncoinAPP.xcodeproj */;
+				},
+				{
+					ProductGroup = 1D2472B02DB3B24700F0E3D8 /* Products */;
+					ProjectRef = 1D2472AE2DB3B24700F0E3D8 /* LeboncoinAPP.xcodeproj */;
+				},
+				{
+					ProductGroup = 1D181D152DB3AC41001A393A /* Products */;
+					ProjectRef = 1D181D132DB3AC41001A393A /* LeboncoinAPP.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1D1F45A92DB38DFE006B7C74 /* LeboncoinAPP */,
