@@ -1,7 +1,7 @@
 import SwiftUI
 
 @MainActor
-class HomeViewModel: ObservableObject {
+class AdsListViewModel: ObservableObject {
   @Published var ads: [AdItem] = []
   @Published var categories: [String] = []
   @Published var selectedCategory = "All"
@@ -16,9 +16,6 @@ class HomeViewModel: ObservableObject {
   
   init(adsList: AdsListUseCase = NetworkService.shared.adsList) {
     self.adsList = adsList
-    Task {
-      await fetchAdsList()
-    }
   }
   
   func fetchAdsList() async {
@@ -26,16 +23,18 @@ class HomeViewModel: ObservableObject {
     defer { isLoading = false }
     
     do {
-      ads = try await adsList.execute()
-      prepareCategories(ads: ads)
+      let fetchedAds = try await adsList.execute()
+      self.ads = fetchedAds
+      prepareCategories(ads: fetchedAds)
     } catch {
+      self.error = error
       handleError(error)
     }
   }
 }
 
 // MARK: - Private methods
-extension HomeViewModel {
+extension AdsListViewModel {
   
   private func handleError(_ error: Error) {
     
