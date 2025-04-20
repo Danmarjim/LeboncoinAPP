@@ -4,7 +4,7 @@ import SwiftUI
 struct LeboncoinAPPApp: App {
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      HomeView()
     }
   }
 }

@@ -2,9 +2,17 @@ import SwiftUI
 
 @MainActor
 class HomeViewModel: ObservableObject {
-  @Published var items: [AdItem] = []
+  @Published var ads: [AdItem] = []
+  @Published var categories: [String] = []
+  @Published var selectedCategory = "All"
+  @Published var isLoading = false
+  @Published var error: Error?
   
   private let adsList: AdsListUseCase
+  
+  var filteredAds: [AdItem] {
+    selectedCategory == "All" ? ads : ads.filter { $0.category == selectedCategory }
+  }
   
   init(adsList: AdsListUseCase = NetworkService.shared.adsList) {
     self.adsList = adsList
@@ -14,8 +22,12 @@ class HomeViewModel: ObservableObject {
   }
   
   func fetchAdsList() async {
+    isLoading = true
+    defer { isLoading = false }
+    
     do {
-      items = try await adsList.execute()
+      ads = try await adsList.execute()
+      prepareCategories(ads: ads)
     } catch {
       handleError(error)
     }
@@ -27,5 +39,11 @@ extension HomeViewModel {
   
   private func handleError(_ error: Error) {
     
+  }
+  
+  private func prepareCategories(ads: [AdItem]) {
+    var uniqueCategories = Array(Set(ads.map { $0.category })).sorted()
+    uniqueCategories.insert("All", at: 0)
+    categories = uniqueCategories
   }
 }
