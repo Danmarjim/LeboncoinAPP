@@ -1,12 +1,17 @@
 import SwiftUI
 
+private enum ViewLayout {
+  static let cornerRadius: CGFloat = 20
+  static let opacity: Double = 0.2
+}
+
 struct CategoryView: View {
   @Binding var selectedCategory: String
   let categories: [String]
   
   var body: some View {
     ScrollView(.horizontal, showsIndicators: false) {
-      HStack(spacing: 12) {
+      HStack(spacing: Spacing.l) {
         ForEach(categories, id: \.self) { category in
           CategoryButton(category: category, isSelected: category == selectedCategory) {
             selectedCategory = category
@@ -26,11 +31,11 @@ struct CategoryButton: View {
   var body: some View {
     Button(action: action) {
       Text(category)
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
-        .background(isSelected ? Color.blue : Color.gray.opacity(0.2))
+        .padding(.horizontal, Spacing.l)
+        .padding(.vertical, Spacing.s)
+        .background(isSelected ? Color.blue : Color.gray.opacity(ViewLayout.opacity))
         .foregroundColor(isSelected ? .white : .primary)
-        .cornerRadius(20)
+        .cornerRadius(ViewLayout.cornerRadius)
     }
   }
 }
