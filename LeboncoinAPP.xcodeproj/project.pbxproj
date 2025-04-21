@@ -33,6 +33,25 @@
 		1D2472AE2DB3B24700F0E3D8 /* LeboncoinAPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = LeboncoinAPP.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		1DC6F5972DB658F400679AFB /* Exceptions for "LeboncoinAPPTests" folder in "LeboncoinAPP" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				TestDoubles/AdsApiDataSourceMock.swift,
+				TestDoubles/AdsListUseCaseMock.swift,
+			);
+			target = 1D1F45A92DB38DFE006B7C74 /* LeboncoinAPP */;
+		};
+		1DC6F59F2DB65CDF00679AFB /* Exceptions for "LeboncoinAPPTests" folder in "LeboncoinAPPTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				TestDoubles/AdsApiDataSourceMock.swift,
+				TestDoubles/AdsListUseCaseMock.swift,
+			);
+			target = 1D1F45B72DB38DFE006B7C74 /* LeboncoinAPPTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1D1F45AC2DB38DFE006B7C74 /* LeboncoinAPP */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -41,6 +60,10 @@
 		};
 		1D1F45BB2DB38DFE006B7C74 /* LeboncoinAPPTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				1DC6F5972DB658F400679AFB /* Exceptions for "LeboncoinAPPTests" folder in "LeboncoinAPP" target */,
+				1DC6F59F2DB65CDF00679AFB /* Exceptions for "LeboncoinAPPTests" folder in "LeboncoinAPPTests" target */,
+			);
 			path = LeboncoinAPPTests;
 			sourceTree = "<group>";
 		};
