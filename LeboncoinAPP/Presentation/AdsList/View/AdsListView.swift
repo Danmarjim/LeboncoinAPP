@@ -11,7 +11,7 @@ struct AdsListView: View {
         } else if let _ = viewModel.error {
           
         } else {
-          CategoryView(selectedCategory: $viewModel.selectedCategory, categories: viewModel.categories)
+          CategoryListView(selectedCategory: $viewModel.selectedCategory, categories: viewModel.categories)
             .padding([.top, .bottom], Spacing.m)
           
           List(viewModel.filteredAds) { ad in

@@ -27,9 +27,7 @@ struct AdRow: View {
       VStack(alignment: .leading, spacing: Spacing.s) {
         Text(ad.title)
           .font(.headline)
-        Text(ad.category)
-          .font(.subheadline)
-          .foregroundColor(.secondary)
+        CategoryView(viewModel: CategoryViewModel(category: ad.category))
         Text("\(ad.price, format: .currency(code: "EUR"))")
           .bold()
           .foregroundColor(Color(AppColors.primary))
