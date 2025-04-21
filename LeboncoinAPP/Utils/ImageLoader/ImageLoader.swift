@@ -20,7 +20,7 @@ struct RemoteImageLoader: ImageLoader {
           Image(systemName: "photo")
             .resizable()
             .scaledToFit()
-            .foregroundColor(.gray)
+            .foregroundColor(Color(AppColors.secondary))
         } else {
           ProgressView()
         }
@@ -32,7 +32,7 @@ struct RemoteImageLoader: ImageLoader {
     guard let url = url else {
       DispatchQueue.main.async {
         imageView.image = UIImage(systemName: "photo")
-        imageView.tintColor = .gray
+        imageView.tintColor = AppColors.secondary
         completion()
       }
       return
@@ -44,7 +44,7 @@ struct RemoteImageLoader: ImageLoader {
           imageView.image = image
         } else {
           imageView.image = UIImage(systemName: "photo")
-          imageView.tintColor = .gray
+          imageView.tintColor = AppColors.secondary
         }
         completion()
       }

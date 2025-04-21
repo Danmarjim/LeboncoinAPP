@@ -32,6 +32,7 @@ struct AdRow: View {
           .foregroundColor(.secondary)
         Text("\(ad.price, format: .currency(code: "EUR"))")
           .bold()
+          .foregroundColor(Color(AppColors.primary))
       }
     }
     .padding(.vertical, Spacing.l)

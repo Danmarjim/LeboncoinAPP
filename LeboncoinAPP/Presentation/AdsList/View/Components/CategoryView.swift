@@ -33,8 +33,8 @@ struct CategoryButton: View {
       Text(category)
         .padding(.horizontal, Spacing.l)
         .padding(.vertical, Spacing.s)
-        .background(isSelected ? Color.blue : Color.gray.opacity(ViewLayout.opacity))
-        .foregroundColor(isSelected ? .white : .primary)
+        .background(isSelected ? Color(AppColors.primary) : Color(AppColors.secondary))
+        .foregroundColor(isSelected ? .white : Color(AppColors.primary))
         .cornerRadius(ViewLayout.cornerRadius)
     }
   }
