@@ -9,6 +9,7 @@ private enum ViewLayout {
 final class AdDetailViewController: UIViewController {
   private let viewModel: AdDetailsViewModel
   private let imageLoader: ImageLoader
+  private let categoryModel: CategoryViewModel
   
   private var scrollView: UIScrollView = {
     let scrollView = UIScrollView()
@@ -24,16 +25,20 @@ final class AdDetailViewController: UIViewController {
     return view
   }()
   
-  private var titleLabel: UILabel = {
+  private lazy var categoryView: UIHostView<CategoryView> = {
+    return UIHostView(rootView: CategoryView(viewModel: self.categoryModel))
+  }()
+  
+  private var priceLabel: UILabel = {
     let label = UILabel()
     label.font = .preferredFont(forTextStyle: .title1)
-    label.numberOfLines = 0
+    label.textColor = AppColors.primary
     return label
   }()
   
-  private var categoryLabel: UILabel = {
+  private var titleLabel: UILabel = {
     let label = UILabel()
-    label.font = .preferredFont(forTextStyle: .caption1)
+    label.font = .preferredFont(forTextStyle: .title1)
     label.numberOfLines = 0
     return label
   }()
@@ -60,7 +65,17 @@ final class AdDetailViewController: UIViewController {
     return indicator
   }()
   
-  private var stackView: UIStackView = {
+  private var horizontalStackView: UIStackView = {
+    let stack = UIStackView()
+    stack.axis = .horizontal
+    stack.spacing = Spacing.l
+    stack.distribution = .fillEqually
+    stack.alignment = .fill
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    return stack
+  }()
+  
+  private var verticalStackView: UIStackView = {
     let stack = UIStackView()
     stack.axis = .vertical
     stack.spacing = Spacing.l
@@ -69,9 +84,11 @@ final class AdDetailViewController: UIViewController {
   }()
   
   init(viewModel: AdDetailsViewModel,
-       imageLoader: ImageLoader = RemoteImageLoader()) {
+       imageLoader: ImageLoader = RemoteImageLoader(),
+       categoryModel: CategoryViewModel = CategoryViewModel()) {
     self.viewModel = viewModel
     self.imageLoader = imageLoader
+    self.categoryModel = categoryModel
     
     super.init(nibName: nil, bundle: nil)
   }
@@ -84,7 +101,8 @@ final class AdDetailViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
     
-    setupUI()
+    setupView()
+    setupContraints()
     configureWithViewModel()
   }
 }
@@ -92,18 +110,30 @@ final class AdDetailViewController: UIViewController {
 // MARK: - SetupUI
 extension AdDetailViewController {
   
-  private func setupUI() {
+  private func setupView() {
     view.addSubview(scrollView)
+    scrollView.addSubview(contentView)
+
+    contentView.addSubview(adImage)
+    contentView.addSubview(imageLoadingIndicator)
     
+    horizontalStackView.addArrangedSubview(categoryView)
+    horizontalStackView.addArrangedSubview(priceLabel)
+    contentView.addSubview(horizontalStackView)
+    
+    verticalStackView.addArrangedSubview(titleLabel)
+    verticalStackView.addArrangedSubview(descriptionLabel)
+    contentView.addSubview(verticalStackView)
+  }
+  
+  private func setupContraints() {
     NSLayoutConstraint.activate([
       scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ])
-    
-    scrollView.addSubview(contentView)
-    
+        
     NSLayoutConstraint.activate([
       contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
       contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -111,10 +141,7 @@ extension AdDetailViewController {
       contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
       contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
     ])
-    
-    contentView.addSubview(adImage)
-    contentView.addSubview(imageLoadingIndicator)
-    
+        
     NSLayoutConstraint.activate([
       adImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: Spacing.l),
       adImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -125,23 +152,25 @@ extension AdDetailViewController {
       imageLoadingIndicator.centerYAnchor.constraint(equalTo: adImage.centerYAnchor)
     ])
     
-    stackView.addArrangedSubview(titleLabel)
-    stackView.addArrangedSubview(categoryLabel)
-    stackView.addArrangedSubview(descriptionLabel)
-    contentView.addSubview(stackView)
+    NSLayoutConstraint.activate([
+      horizontalStackView.topAnchor.constraint(equalTo: adImage.bottomAnchor, constant: Spacing.l),
+      horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Spacing.l),
+      horizontalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Spacing.l),
+    ])
     
     NSLayoutConstraint.activate([
-      stackView.topAnchor.constraint(equalTo: adImage.bottomAnchor, constant: Spacing.l),
-      stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Spacing.l),
-      stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Spacing.l),
-      stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Spacing.l)
+      verticalStackView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: Spacing.l),
+      verticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Spacing.l),
+      verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Spacing.l),
+      verticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Spacing.l)
     ])
   }
   
   private func configureWithViewModel() {
     titleLabel.text = viewModel.title
     descriptionLabel.text = viewModel.description
-    categoryLabel.text = viewModel.category
+    categoryModel.updateCategory(viewModel.category)
+    priceLabel.text = viewModel.price
     
     imageLoadingIndicator.startAnimating()
     imageLoader.loadImage(from: URL(string: viewModel.thumbImage), into: adImage, completion: { [weak self] in

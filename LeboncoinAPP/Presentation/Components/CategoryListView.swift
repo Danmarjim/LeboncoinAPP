@@ -5,7 +5,7 @@ private enum ViewLayout {
   static let opacity: Double = 0.2
 }
 
-struct CategoryView: View {
+struct CategoryListView: View {
   @Binding var selectedCategory: String
   let categories: [String]
   
@@ -41,7 +41,7 @@ struct CategoryButton: View {
 }
 
 #Preview {
-  CategoryView(
+  CategoryListView(
     selectedCategory: .constant("Movies"),
     categories: ["All", "Books", "Movies", "Music"]
   )
