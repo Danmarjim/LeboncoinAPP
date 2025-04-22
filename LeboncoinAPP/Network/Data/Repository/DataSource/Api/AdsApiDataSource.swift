@@ -25,26 +25,30 @@ final class AdsApiDataSource: AdsDataSource {
 extension AdsApiDataSource {
   
   private func fetchCategoriesRaw() async throws -> [CategoryResponse] {
-    let url = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json")!
-    let (data, _) = try await URLSession.shared.data(from: url)
-    
-    do {
-      return try JSONDecoder().decode([CategoryResponse].self, from: data)
-    } catch {
-      print("Decoding error: \(error)")
-      throw error
-    }
+    try await fetch(urlString: "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json")
   }
   
   private func fetchAdsRaw() async throws -> [AdItemResponse] {
-    let url = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")!
-    let (data, _) = try await URLSession.shared.data(from: url)
+    try await fetch(urlString: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")
+  }
+  
+  private func fetch<T: Decodable>(urlString: String) async throws -> T {
+    guard let url = URL(string: urlString) else {
+      throw NetworkError.invalidURL(urlString)
+    }
+    
+    let data: Data
+    do {
+      let (fetchedData, _) = try await URLSession.shared.data(from: url)
+      data = fetchedData
+    } catch {
+      throw NetworkError.requestFailed(error)
+    }
     
     do {
-      return try JSONDecoder().decode([AdItemResponse].self, from: data)
+      return try JSONDecoder().decode(T.self, from: data)
     } catch {
-      print("Decoding error: \(error)")
-      throw error
+      throw NetworkError.decodingFailed(error)
     }
   }
 }

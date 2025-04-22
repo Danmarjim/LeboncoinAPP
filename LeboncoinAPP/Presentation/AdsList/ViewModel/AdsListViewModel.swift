@@ -6,7 +6,8 @@ class AdsListViewModel: ObservableObject {
   @Published var categories: [String] = []
   @Published var selectedCategory = "All"
   @Published var isLoading = false
-  @Published var error: Error?
+  @Published var showErrorAlert = false
+  private(set) var error: Error?
   
   private let adsList: AdsListUseCase
   
@@ -27,8 +28,13 @@ class AdsListViewModel: ObservableObject {
       self.ads = fetchedAds
       prepareCategories(ads: fetchedAds)
     } catch {
-      self.error = error
       handleError(error)
+    }
+  }
+  
+  func retry() {
+    Task {
+      await fetchAdsList()
     }
   }
 }
@@ -37,7 +43,8 @@ class AdsListViewModel: ObservableObject {
 extension AdsListViewModel {
   
   private func handleError(_ error: Error) {
-    
+    self.error = error
+    showErrorAlert = true
   }
   
   private func prepareCategories(ads: [AdItem]) {
