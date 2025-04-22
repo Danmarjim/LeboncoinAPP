@@ -23,11 +23,15 @@ struct AdRow: View {
             .frame(width: ViewLayout.imageFrame.width, height: ViewLayout.imageFrame.height)
             .clipShape(RoundedRectangle(cornerRadius: ViewLayout.cornerRadius))
         }
-        
         VStack(alignment: .leading, spacing: Spacing.s) {
           Text(ad.title)
             .font(.headline)
-          CategoryView(viewModel: CategoryViewModel(category: ad.category))
+          HStack(spacing: Spacing.s) {
+            CategoryView(viewModel: CategoryViewModel(category: ad.category))
+            if ad.isUrgent {
+              CategoryView(viewModel: CategoryViewModel(category: .urgent))
+            }
+          }
           Text("\(ad.price, format: .currency(code: "EUR"))")
             .bold()
             .foregroundColor(Color(AppColors.primary))
@@ -38,7 +42,6 @@ struct AdRow: View {
       HStack(alignment: .top, spacing: Spacing.m) {
         SkeletonView(.rect(cornerRadius: ViewLayout.cornerRadius))
           .frame(width: ViewLayout.imageFrame.width, height: ViewLayout.imageFrame.height)
-        
         VStack(alignment: .leading, spacing: Spacing.s) {
           SkeletonView(.rect)
             .frame(width: 200, height: 25)

@@ -12,7 +12,7 @@ class AdsListViewModel: ObservableObject {
   private let adsList: AdsListUseCase
   
   var filteredAds: [AdItem] {
-    selectedCategory == "All" ? ads : ads.filter { $0.category == selectedCategory }
+    selectedCategory == "All" ? ads : ads.filter { $0.category.rawValue == selectedCategory }
   }
   
   init(adsList: AdsListUseCase = NetworkService.shared.adsList) {
@@ -23,7 +23,7 @@ class AdsListViewModel: ObservableObject {
     isLoading = true
     
 #if DEBUG
-    try? await Task.sleep(for: .seconds(2))
+    try? await Task.sleep(for: .seconds(3))
 #endif
     defer { isLoading = false }
     
@@ -52,7 +52,7 @@ extension AdsListViewModel {
   }
   
   private func prepareCategories(ads: [AdItem]) {
-    var uniqueCategories = Array(Set(ads.map { $0.category })).sorted()
+    var uniqueCategories = Array(Set(ads.map { $0.category.rawValue })).sorted()
     uniqueCategories.insert("All", at: 0)
     categories = uniqueCategories
   }
