@@ -1,13 +1,13 @@
 import SwiftUI
 
 class CategoryViewModel: ObservableObject {
-  @Published var category: String
+  @Published var category: Category
   
-  init(category: String = "") {
+  init(category: Category = .empty) {
     self.category = category
   }
   
-  func updateCategory(_ value: String) {
+  func updateCategory(_ value: Category) {
     category = value
   }
 }

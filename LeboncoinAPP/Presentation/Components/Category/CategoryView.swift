@@ -8,21 +8,21 @@ struct CategoryView: View {
   @StateObject var viewModel: CategoryViewModel
   
   var body: some View {
-    Text(viewModel.category)
+    Text(viewModel.category.rawValue)
       .font(.subheadline)
-      .foregroundColor(.white)
+      .foregroundColor(viewModel.category.foregroundColor)
       .padding([.horizontal, .vertical], Spacing.m)
       .background(
         RoundedRectangle(cornerRadius: ViewLayout.cornerRadius)
-          .fill(Color(AppColors.tertiary))
+          .fill(viewModel.category.color)
       )
       .fixedSize()
   }
 }
 
 #Preview {
-  let viewModel = CategoryViewModel(category: "")
+  let viewModel = CategoryViewModel(category: .empty)
   let view = CategoryView(viewModel: viewModel)
-  viewModel.updateCategory("Service")
+  viewModel.updateCategory(.service)
   return view
 }
