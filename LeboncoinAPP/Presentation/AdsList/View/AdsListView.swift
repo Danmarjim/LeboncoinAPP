@@ -7,7 +7,14 @@ struct AdsListView: View {
     NavigationStack {
       VStack {
         if viewModel.isLoading {
-          ProgressView()
+          CategoryListView(selectedCategory: .constant(""), categories: nil)
+            .padding([.top, .bottom], Spacing.m)
+          
+          List() {
+            ForEach(0..<5, id: \.self) { _ in
+              AdRow()
+            }
+          }
         } else if let error = viewModel.error {
           VStack {
             Text("Something went wrong:")

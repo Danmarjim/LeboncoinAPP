@@ -3,18 +3,26 @@ import SwiftUI
 private enum ViewLayout {
   static let cornerRadius: CGFloat = 20
   static let opacity: Double = 0.2
+  static let skeletonFrame: CGSize = .init(width: 100, height: 30)
 }
 
 struct CategoryListView: View {
   @Binding var selectedCategory: String
-  let categories: [String]
+  let categories: [String]?
   
   var body: some View {
     ScrollView(.horizontal, showsIndicators: false) {
       HStack(spacing: Spacing.l) {
-        ForEach(categories, id: \.self) { category in
-          CategoryButton(category: category, isSelected: category == selectedCategory) {
-            selectedCategory = category
+        if let categories {
+          ForEach(categories, id: \.self) { category in
+            CategoryButton(category: category, isSelected: category == selectedCategory) {
+              selectedCategory = category
+            }
+          }
+        } else {
+          ForEach(0..<5, id: \.self) { _ in
+            SkeletonView(.rect(cornerRadius: ViewLayout.cornerRadius))
+              .frame(width: ViewLayout.skeletonFrame.width, height: ViewLayout.skeletonFrame.height)
           }
         }
       }

@@ -21,6 +21,10 @@ class AdsListViewModel: ObservableObject {
   
   func fetchAdsList() async {
     isLoading = true
+    
+#if DEBUG
+    try? await Task.sleep(for: .seconds(2))
+#endif
     defer { isLoading = false }
     
     do {
