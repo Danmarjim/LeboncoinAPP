@@ -36,6 +36,38 @@ final class AdsRepositorySpec: XCTestCase {
       thenFailureFetchAds()
     }
   }
+  
+  func test_ads_service() async throws {
+    let mockData = try Bundle.loadJSONData(named: "ads")
+    let mockResponse = HTTPURLResponse(
+      url: URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")!,
+      statusCode: 200,
+      httpVersion: nil,
+      headerFields: nil
+    )!
+    
+    let mockSession = URLSessionMock(mockData: mockData, mockResponse: mockResponse)
+    let service = AdsApiDataSource(session: mockSession)
+    
+    let ads = try await service.fetchAdsRaw()
+    XCTAssertNotNil(ads)
+  }
+  
+  func test_categories_service() async throws {
+    let mockData = try Bundle.loadJSONData(named: "categories")
+    let mockResponse = HTTPURLResponse(
+      url: URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json")!,
+      statusCode: 200,
+      httpVersion: nil,
+      headerFields: nil
+    )!
+    
+    let mockSession = URLSessionMock(mockData: mockData, mockResponse: mockResponse)
+    let service = AdsApiDataSource(session: mockSession)
+    
+    let categories = try await service.fetchCategoriesRaw()
+    XCTAssertNotNil(categories)
+  }
 }
 
 // MARK: - GIVEN

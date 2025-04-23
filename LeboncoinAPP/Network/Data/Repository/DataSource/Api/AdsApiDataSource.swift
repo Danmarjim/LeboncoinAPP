@@ -1,9 +1,12 @@
 import Foundation
 
 final class AdsApiDataSource: AdsDataSource {
+  private let session: URLSessionProtocol
   private let domainMapper: AdItemDomainMapper
   
-  init(domainMapper: AdItemDomainMapper = AdItemDomainMapper()) {
+  init(session: URLSessionProtocol = URLSession.shared,
+       domainMapper: AdItemDomainMapper = AdItemDomainMapper()) {
+    self.session = session
     self.domainMapper = domainMapper
   }
   
@@ -24,11 +27,11 @@ final class AdsApiDataSource: AdsDataSource {
 // MARK: - Private methods
 extension AdsApiDataSource {
   
-  private func fetchCategoriesRaw() async throws -> [CategoryResponse] {
+  func fetchCategoriesRaw() async throws -> [CategoryResponse] {
     try await fetch(urlString: "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json")
   }
   
-  private func fetchAdsRaw() async throws -> [AdItemResponse] {
+  func fetchAdsRaw() async throws -> [AdItemResponse] {
     try await fetch(urlString: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")
   }
   
@@ -39,7 +42,7 @@ extension AdsApiDataSource {
     
     let data: Data
     do {
-      let (fetchedData, _) = try await URLSession.shared.data(from: url)
+      let (fetchedData, _) = try await session.data(for: URLRequest(url: url))
       data = fetchedData
     } catch {
       throw NetworkError.requestFailed(error)
