@@ -2,7 +2,7 @@ import SwiftUI
 import UIKit
 
 class UIHostView<Content: View>: UIView {
-  private let hostingController: UIHostingController<Content>
+  let hostingController: UIHostingController<Content>
   
   init(rootView: Content) {
     self.hostingController = UIHostingController(rootView: rootView)

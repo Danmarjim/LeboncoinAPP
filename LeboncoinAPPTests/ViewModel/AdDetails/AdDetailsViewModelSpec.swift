@@ -26,9 +26,10 @@ extension AdDetailsViewModelSpec {
     XCTAssertNotNil(sut)
     XCTAssertFalse(sut.title.isEmpty)
     XCTAssertFalse(sut.description.isEmpty)
-    XCTAssertFalse(sut.category.isEmpty)
+    XCTAssertNotNil(sut.category)
     XCTAssertFalse(sut.price.isEmpty)
     XCTAssertFalse(sut.thumbImage.isEmpty)
+    XCTAssertNotNil(sut.creationDate)
     XCTAssertNotNil(sut.isUrgent)
   }
 }
