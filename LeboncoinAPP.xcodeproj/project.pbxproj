@@ -39,6 +39,7 @@
 			membershipExceptions = (
 				TestDoubles/AdsApiDataSourceMock.swift,
 				TestDoubles/AdsListUseCaseMock.swift,
+				TestDoubles/URLSessionMock.swift,
 			);
 			target = 1D1F45A92DB38DFE006B7C74 /* LeboncoinAPP */;
 		};
@@ -47,6 +48,7 @@
 			membershipExceptions = (
 				TestDoubles/AdsApiDataSourceMock.swift,
 				TestDoubles/AdsListUseCaseMock.swift,
+				TestDoubles/URLSessionMock.swift,
 			);
 			target = 1D1F45B72DB38DFE006B7C74 /* LeboncoinAPPTests */;
 		};
