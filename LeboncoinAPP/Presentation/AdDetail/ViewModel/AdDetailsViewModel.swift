@@ -17,5 +17,6 @@ class AdDetailsViewModel {
     return formatter.string(from: NSNumber(value: ad.price)) ?? "\(ad.price) €"
   }
   var thumbImage: String { return ad.thumbnailUrl }
+  var creationDate: Date { return ad.creationDate }
   var isUrgent: Bool { return ad.isUrgent }
 }

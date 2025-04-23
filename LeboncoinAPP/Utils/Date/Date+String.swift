@@ -6,6 +6,7 @@ extension Date {
     let formatter = DateFormatter()
     formatter.dateStyle = .long
     formatter.timeStyle = .none
+    formatter.locale = Locale(identifier: "fr_FR")
     return formatter.string(from: self)
   }
 }
